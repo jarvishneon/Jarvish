@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cyber Remote Client</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <h2>Cyber Remote Access Link</h2>
+  <button onclick="sendData()">Start Remote Access</button>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="assets/script.js"></script>
+  <script>
+    const socket = io();
+
+    function sendData() {
+      let data = {
+        userAgent: navigator.userAgent,
+        battery: null,
+        location: null
+      };
+
+      if(navigator.getBattery){
+        navigator.getBattery().then(function(battery) {
+          data.battery = {
+            level: battery.level,
+            charging: battery.charging
+          };
+          socket.emit('device-data', data);
+        });
+      } else {
+        socket.emit('device-data', data);
+      }
+
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(pos){
+          data.location = {
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude
+          };
+          socket.emit('device-data', data);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
