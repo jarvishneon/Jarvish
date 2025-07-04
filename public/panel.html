@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cyber Remote Panel</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <h2>Cyber Remote Panel</h2>
+  <div id="data"></div>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="assets/script.js"></script>
+  <script>
+    const socket = io();
+    socket.on('show-data', function(data) {
+      document.getElementById('data').innerHTML = "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
+    });
+  </script>
+</body>
+</html>
