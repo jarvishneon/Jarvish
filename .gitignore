@@ -1,0 +1,7 @@
+node_modules/
+*.log
+keylog.txt
+clients.log
+locations.log
+command_results.log
+.env
